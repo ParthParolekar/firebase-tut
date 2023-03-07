@@ -1,40 +1,40 @@
 import {
   signInWithPopup,
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword
-} from 'firebase/auth'
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { auth, googleProvider } from '../config/firebase'
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { auth, googleProvider } from "../config/firebase";
 
 const Login = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const [signUp, setSignUp] = useState({ email: '', password: '' })
-  const [signIn, setSignIn] = useState({ email2: '', password2: '' })
+  const [signUp, setSignUp] = useState({ email: "", password: "" });
+  const [signIn, setSignIn] = useState({ email2: "", password2: "" });
 
   const signInWithGoogle = async () => {
     try {
-      const result = await signInWithPopup(auth, googleProvider)
-      console.log(result)
-      navigate('/')
+      const result = await signInWithPopup(auth, googleProvider);
+      console.log(result);
+      navigate("/");
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   const signUpCredentials = (e: React.ChangeEvent) => {
     setSignUp({
       ...signUp,
-      [(e.target as HTMLInputElement).id]: (e.target as HTMLInputElement).value
-    })
-  }
+      [(e.target as HTMLInputElement).id]: (e.target as HTMLInputElement).value,
+    });
+  };
   const signInCredentials = (e: React.ChangeEvent) => {
     setSignIn({
       ...signIn,
-      [(e.target as HTMLInputElement).id]: (e.target as HTMLInputElement).value
-    })
-  }
+      [(e.target as HTMLInputElement).id]: (e.target as HTMLInputElement).value,
+    });
+  };
 
   const signUpWithEmail = async () => {
     try {
@@ -42,24 +42,26 @@ const Login = () => {
         auth,
         signUp.email,
         signUp.password
-      )
-      console.log(user)
+      );
+      console.log(user);
+      navigate("/");
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
   const signInWithEmail = async () => {
     try {
       const user = await signInWithEmailAndPassword(
         auth,
         signIn.email2,
         signIn.password2
-      )
-      console.log(user.user)
+      );
+      navigate("/");
+      //   console.log(user.user)
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   return (
     <div>
@@ -68,19 +70,19 @@ const Login = () => {
       <div>
         <h3>Sign Up</h3>
         <div>
-          <label htmlFor='email'>Email </label>
+          <label htmlFor="email">Email </label>
           <input
-            type='text'
-            id='email'
+            type="text"
+            id="email"
             value={signUp.email}
             onChange={signUpCredentials}
           />
         </div>
         <div>
-          <label htmlFor='password'>Password </label>
+          <label htmlFor="password">Password </label>
           <input
-            type='password'
-            id='password'
+            type="password"
+            id="password"
             value={signUp.password}
             onChange={signUpCredentials}
           />
@@ -90,19 +92,19 @@ const Login = () => {
       <div>
         <h3>Sign In</h3>
         <div>
-          <label htmlFor='email'>Email </label>
+          <label htmlFor="email">Email </label>
           <input
-            type='text'
-            id='email2'
+            type="text"
+            id="email2"
             value={signIn.email2}
             onChange={signInCredentials}
           />
         </div>
         <div>
-          <label htmlFor='password'>Password </label>
+          <label htmlFor="password">Password </label>
           <input
-            type='password'
-            id='password2'
+            type="password"
+            id="password2"
             value={signIn.password2}
             onChange={signInCredentials}
           />
@@ -110,7 +112,7 @@ const Login = () => {
         <button onClick={signInWithEmail}>Sign In</button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
